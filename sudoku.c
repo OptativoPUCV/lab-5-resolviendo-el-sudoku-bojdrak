@@ -128,6 +128,55 @@ int is_valid(Node* n){
 
 List* get_adj_nodes(Node* n){
     List* list=createList();
+    /* 
+   obtenga los nodos adyacentes a n
+   y agréguelos a la lista
+   */
+    int fila = -1, col = -1;
+    for (int i = 0; i < 9 && fila == -1; i++){
+        for (int j = 0; j < 9;j++){
+            if (n->sudo[i][j] == 0){
+                fila = i;
+                col = j;
+                break;
+            }
+        }
+    }
+    if (fila == -1) return list;
+    for(int valor = 1; valor <= 9; valor++){
+        Node* NueNodo = copy(n);
+        NueNodo->sudo[fila][col] = valor;
+        if (is_valid(NueNodo)){
+            pushBack(list, NueNodo);
+        } else {
+            free(NueNodo);
+        }
+    }
+    // Verifica si hay ceros
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(n->sudo[i][j] == 0){
+                free(n);
+                return list;
+            }
+        }
+    }
+    // Si no hay ceros y no hay repetidos, es valido
+    for(int i=0;i<9;i++){
+        int* check = (int*) malloc(10*sizeof(int));
+        for(int k=0;k<10;k++)
+            check[k]=0;
+        for(int j=0;j<9;j++){
+            if(n->sudo[i][j] != 0){
+                if(check[n->sudo[i][j]] == 1){
+                    free(check);
+                    return list;
+                }
+                check[n->sudo[i][j]] = 1;
+            }
+        }
+        free(check);
+    }
     return list;
 }
 
