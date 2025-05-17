@@ -44,7 +44,84 @@ void print_node(Node* n){
 }
 
 int is_valid(Node* n){
-
+  int i, j, k;
+  //filas
+  for(i=0;i<9;i++){
+    int* check = (int*) malloc(10*sizeof(int));
+    for(k=0;k<10;k++)
+      check[k]=0;
+    for(j=0;j<9;j++){
+      if(n->sudo[i][j] != 0){
+        if(check[n->sudo[i][j]] == 1){
+          free(check);
+          return 0;
+        }
+        check[n->sudo[i][j]] = 1;
+      }
+    }
+    free(check);
+  }
+  //columnas
+  for(j=0;j<9;j++){
+    int* check = (int*) malloc(10*sizeof(int));
+    for(k=0;k<10;k++)
+      check[k]=0;
+    for(i=0;i<9;i++){
+      if(n->sudo[i][j] != 0){
+        if(check[n->sudo[i][j]] == 1){
+          free(check);
+          return 0;
+        }
+        check[n->sudo[i][j]] = 1;
+      }
+    }
+    free(check);
+  }
+  //subcuadrantes
+  for(i=0;i<9;i+=3){
+    for(j=0;j<9;j+=3){
+      int* check = (int*) malloc(10*sizeof(int));
+      for(k=0;k<10;k++)
+        check[k]=0;
+      for(int x=i;x<i+3;x++){
+        for(int y=j;y<j+3;y++){
+          if(n->sudo[x][y] != 0){
+            if(check[n->sudo[x][y]] == 1){
+              free(check);
+              return 0;
+            }
+            check[n->sudo[x][y]] = 1;
+          }
+        }
+      }
+      free(check);
+    }
+  }
+  //verifica si hay ceros
+  for(i=0;i<9;i++){
+    for(j=0;j<9;j++){
+      if(n->sudo[i][j] == 0){
+        free(n);
+        return 0;
+      }
+    }
+  }
+  //si no hay ceros y no hay repetidos, es valido
+  for(i=0;i<9;i++){
+    int* check = (int*) malloc(10*sizeof(int));
+    for(k=0;k<10;k++)
+      check[k]=0;
+    for(j=0;j<9;j++){
+      if(n->sudo[i][j] != 0){
+        if(check[n->sudo[i][j]] == 1){
+          free(check);
+          return 0;
+        }
+        check[n->sudo[i][j]] = 1;
+      }
+    }
+    free(check);
+  }
     return 1;
 }
 
