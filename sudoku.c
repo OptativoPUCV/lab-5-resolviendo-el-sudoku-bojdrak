@@ -48,8 +48,8 @@ int is_valid(Node* n){
   //filas
   for(i=0;i<9;i++){
     int* check = (int*) malloc(10*sizeof(int));
-    for(k=0;k<10;k++)
-      check[k]=0;
+    for(k=0;k<10;k++) check[k]=0;
+
     for(j=0;j<9;j++){
       if(n->sudo[i][j] != 0){
         if(check[n->sudo[i][j]] == 1){
@@ -96,42 +96,13 @@ int is_valid(Node* n){
       }
       free(check);
     }
-  }
-  //verifica si hay ceros
-  for(i=0;i<9;i++){
-    for(j=0;j<9;j++){
-      if(n->sudo[i][j] == 0){
-        free(n);
-        return 0;
-      }
-    }
-  }
-  //si no hay ceros y no hay repetidos, es valido
-  for(i=0;i<9;i++){
-    int* check = (int*) malloc(10*sizeof(int));
-    for(k=0;k<10;k++)
-      check[k]=0;
-    for(j=0;j<9;j++){
-      if(n->sudo[i][j] != 0){
-        if(check[n->sudo[i][j]] == 1){
-          free(check);
-          return 0;
-        }
-        check[n->sudo[i][j]] = 1;
-      }
-    }
-    free(check);
-  }
-    return 1;
+  }  
+  return 1;
 }
 
 
 List* get_adj_nodes(Node* n){
     List* list=createList();
-    /* 
-   obtenga los nodos adyacentes a n
-   y agréguelos a la lista
-   */
     int fila = -1, col = -1;
     for (int i = 0; i < 9 && fila == -1; i++){
         for (int j = 0; j < 9;j++){
@@ -182,10 +153,34 @@ List* get_adj_nodes(Node* n){
 
 
 int is_final(Node* n){
-    return 0;
+  for(int i=0;i<9;i++){
+    for(int j=0;j<9;j++){
+      if(n->sudo[i][j] == 0){
+        return 0;
+      }
+    }
+  }
+  return 1;
 }
 
 Node* DFS(Node* initial, int* cont){
+  Stack* stack = createStack();
+  push(stack, initial);
+  while(!is_empty(stack)){
+    Node* n = top(stack);
+    pop(stack);
+    (*cont)++;
+    if(is_final(n)){
+      return n;
+    }
+    List* adj = get_adj_nodes(n);
+    for(Node* node = first(adj); node != NULL; node = next(adj)){
+      push(stack, node);
+    }
+    clean(adj);
+  }
+  clean(stack);
+  free(initial);
   return NULL;
 }
 
