@@ -46,7 +46,7 @@ void print_node(Node* n){
 
 
 int is_valid(Node* n) {
-  // filas
+  // rows
   for (int i = 0; i < 9; i++){
     int check[10] = {0};
     for (int j = 0; j < 9; j++){
@@ -57,7 +57,7 @@ int is_valid(Node* n) {
     }
   }
 
-  // columnas
+  // colunumnas
   for (int j = 0; j < 9; j++){
     int check[10] = {0};
     for (int i = 0; i < 9; i++){
@@ -88,22 +88,22 @@ int is_valid(Node* n) {
 List* get_adj_nodes(Node* n){
   List* list = createList();
 
-  int fila = -1, col = -1;
-  for (int i = 0; i < 9 && fila == -1; i++){
+  int row = -1, column = -1;
+  for (int i = 0; i < 9 && row == -1; i++){
     for (int j = 0; j < 9; j++){
       if (n->sudo[i][j] == 0){
-        fila = i;
-        col = j;
-        break;
+        row = i;
+        column = j;
+        break;  
       }
     }
   }
 
-  if (fila == -1) return list;
+  if (row == -1) return list;
 
   for (int valor = 1; valor <= 9; valor++){
     Node* new_node = copy(n);
-    new_node->sudo[fila][col] = valor;
+    new_node->sudo[row][column] = valor;
     if (is_valid(new_node)){
       pushBack(list, new_node);
     } else {
@@ -125,13 +125,13 @@ int is_final(Node* n){
   return 1;
 }
 
-Node* DFS(Node* initial, int* cont){
-  *cont = 0;
+Node* DFS(Node* initial, int* counter){
+  *counter = 0;
   Stack* stack = createStack();
   push(stack, initial);
 
   while (!is_empty(stack)) {
-    (*cont)++;
+    (*counter)++;
     Node* current = top(stack);
     pop(stack);
 
@@ -153,15 +153,15 @@ Node* DFS(Node* initial, int* cont){
   free(stack);
   return NULL;
 }
-
+/*
 int main( int argc, char *argv[] ){
   Node* initial= read_file("s12a.txt");;
 
-  int cont=0;
-  Node* final = DFS(initial, &cont);
-  printf("iterations:%d\n",cont);
+  int counter=0;
+  Node* final = DFS(initial, &counter);
+  printf("iterations:%d\n",counter);
   print_node(final);
 
   return 0;
 }
-
+*/
