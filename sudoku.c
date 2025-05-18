@@ -96,6 +96,7 @@ List* get_adj_nodes(Node* n){
             }
         }
     }
+    
     if (fila == -1) return list;
     for(int valor = 1; valor <= 9; valor++){
         Node* NueNodo = copy(n);
@@ -158,6 +159,11 @@ Node* DFS(Node* initial, int* cont){
     if (is_final(n)){
       clean(stack);  
       return n;
+    }
+    List* adj = get_adj_nodes(n);
+
+    for (Node* node = first(adj); node != NULL; node = next(adj)){
+      push(stack, node);
     }
 
     free(n); 
