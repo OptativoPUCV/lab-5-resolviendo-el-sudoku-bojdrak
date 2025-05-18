@@ -5,7 +5,7 @@
 
 typedef struct{
    int sudo[9][9];
-}Node;
+} Node;
 
 Node* createNode(){
   Node* n=(Node*) malloc(sizeof(Node));
@@ -79,7 +79,7 @@ int is_valid(Node* n){
       check[val] = 1;
     }
   }
-  
+
   return 1;
 }
 
@@ -149,21 +149,22 @@ int is_final(Node* n){
 Node* DFS(Node* initial, int* cont){
   Stack* stack = createStack();
   push(stack, initial);
-  while(!is_empty(stack)){
+
+  while (!is_empty(stack)){
     Node* n = top(stack);
     pop(stack);
+
     (*cont)++;
-    if(is_final(n)){
+    if (is_final(n)){
+      clean(stack);  
       return n;
     }
-    List* adj = get_adj_nodes(n);
-    for(Node* node = first(adj); node != NULL; node = next(adj)){
-      push(stack, node);
-    }
-    clean(adj);
+
+    free(n); 
+    clean(adj); 
   }
+
   clean(stack);
-  free(initial);
   return NULL;
 }
 
