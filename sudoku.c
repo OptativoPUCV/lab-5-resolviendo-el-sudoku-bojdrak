@@ -45,7 +45,7 @@ void print_node(Node* n){
 
 
 
-int is_valid(Node* n){
+int is_valid(Node* n) {
   // filas
   for (int i = 0; i < 9; i++){
     int check[10] = {0};
@@ -134,10 +134,12 @@ Node* DFS(Node* initial, int* cont){
     pop(stack);
 
     (*cont)++;
+
     if (is_final(n)){
-      clean(stack);  
+      clean(stack);
       return n;
     }
+
     List* adj = get_adj_nodes(n);
 
     for (Node* node = first(adj); node != NULL; node = next(adj)){
