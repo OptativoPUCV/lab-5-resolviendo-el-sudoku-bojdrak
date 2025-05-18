@@ -55,7 +55,7 @@ int is_valid(Node* n){
       check[val] = 1;
     }
   }
-  
+
   //columnas
   for (j = 0; j < 9; j++){
     int check[10] = {0};
@@ -68,25 +68,18 @@ int is_valid(Node* n){
   }
 
   //subcuadrantes
-  for(i=0;i<9;i+=3){
-    for(j=0;j<9;j+=3){
-      int* check = (int*) malloc(10*sizeof(int));
-      for(k=0;k<10;k++)
-        check[k]=0;
-      for(int x=i;x<i+3;x++){
-        for(int y=j;y<j+3;y++){
-          if(n->sudo[x][y] != 0){
-            if(check[n->sudo[x][y]] == 1){
-              free(check);
-              return 0;
-            }
-            check[n->sudo[x][y]] = 1;
-          }
-        }
-      }
-      free(check);
+  for (int k = 0; k < 9; k++){
+    int check[10] = {0};
+    for (int p = 0; p < 9; p++){
+      int i = 3 * (k / 3) + (p / 3);
+      int j = 3 * (k % 3) + (p % 3);
+      int val = n->sudo[i][j];
+      if (val && check[val])
+        return 0;
+      check[val] = 1;
     }
-  }  
+  }
+  
   return 1;
 }
 
