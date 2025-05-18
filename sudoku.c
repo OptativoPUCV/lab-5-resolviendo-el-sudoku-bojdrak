@@ -46,12 +46,10 @@ void print_node(Node* n){
 
 
 int is_valid(Node* n){
-  int i, j;
-
   // filas
-  for (i = 0; i < 9; i++){
+  for (int i = 0; i < 9; i++){
     int check[10] = {0};
-    for (j = 0; j < 9; j++){
+    for (int j = 0; j < 9; j++){
       int val = n->sudo[i][j];
       if (val && check[val])
         return 0;
@@ -60,9 +58,9 @@ int is_valid(Node* n){
   }
 
   // columnas
-  for (j = 0; j < 9; j++){
+  for (int j = 0; j < 9; j++){
     int check[10] = {0};
-    for (i = 0; i < 9; i++){
+    for (int i = 0; i < 9; i++){
       int val = n->sudo[i][j];
       if (val && check[val])
         return 0;
@@ -154,9 +152,8 @@ Node* DFS(Node* initial, int* cont){
   return NULL;
 }
 
-/*
-int main(int argc, char *argv[]){
 
+int main(){
   Node* initial= read_file("s12a.txt");;
 
   int cont=0;
@@ -165,4 +162,5 @@ int main(int argc, char *argv[]){
   print_node(final);
 
   return 0;
-}*/
+}
+
