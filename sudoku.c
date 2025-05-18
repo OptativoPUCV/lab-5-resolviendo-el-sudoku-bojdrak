@@ -43,9 +43,12 @@ void print_node(Node* n){
     printf("\n");
 }
 
+
+
 int is_valid(Node* n){
-  int i, j, k;
-  //filas
+  int i, j;
+
+  // filas
   for (i = 0; i < 9; i++){
     int check[10] = {0};
     for (j = 0; j < 9; j++){
@@ -56,7 +59,7 @@ int is_valid(Node* n){
     }
   }
 
-  //columnas
+  // columnas
   for (j = 0; j < 9; j++){
     int check[10] = {0};
     for (i = 0; i < 9; i++){
@@ -67,7 +70,7 @@ int is_valid(Node* n){
     }
   }
 
-  //subcuadrantes
+  // subcuadrantes
   for (int k = 0; k < 9; k++){
     int check[10] = {0};
     for (int p = 0; p < 9; p++){
@@ -151,7 +154,8 @@ Node* DFS(Node* initial, int* cont){
   return NULL;
 }
 
-int main( int argc, char *argv[] ){
+/*
+int main(int argc, char *argv[]){
 
   Node* initial= read_file("s12a.txt");;
 
@@ -161,4 +165,4 @@ int main( int argc, char *argv[] ){
   print_node(final);
 
   return 0;
-}
+}*/
