@@ -130,32 +130,29 @@ Node* DFS(Node* initial, int* cont){
   Stack* stack = createStack();
   push(stack, initial);
 
-  while(!is_empty(stack)) {
+  while (!is_empty(stack)) {
     (*cont)++;
     Node* current = top(stack);
     pop(stack);
 
-    if(is_final(current)) {
-        clean(stack);
-        free(stack);
-        return current;
+    if (is_final(current)) {
+      clean(stack);
+      free(stack);
+      return current;
     }
 
     List* adj = get_adj_nodes(current);
-    Node* cur = adj->first;
-
-    while(cur != NULL) {
-        push(stack, cur->data);
-        cur = cur->next;
+    for (Node* n = first(adj); n != NULL; n = next(adj)) {
+      push(stack, n);
     }
-
+    clean(adj);
     free(adj);
   }
 
   clean(stack);
+  free(stack);
   return NULL;
 }
-
 
 int main( int argc, char *argv[] ){
   Node* initial= read_file("s12a.txt");;
